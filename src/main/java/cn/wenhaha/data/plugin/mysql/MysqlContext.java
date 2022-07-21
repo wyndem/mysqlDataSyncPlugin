@@ -1,6 +1,7 @@
 package cn.wenhaha.data.plugin.mysql;
 
 import cn.hutool.db.Db;
+import cn.wenhaha.data.plugin.mysql.bean.MysqlSource;
 import cn.wenhaha.data.plugin.mysql.controller.MysqlController;
 import cn.wenhaha.datasource.*;
 
@@ -13,28 +14,15 @@ public class MysqlContext implements IDataSourcePlugin {
     public  static  final String  name  ="mysql";
 
 
-    @Override
-    public String addPage() {
-        return null;
-    }
-
-    @Override
-    public String updatePage() {
-        return null;
-    }
 
     @Override
     public Class<?>[] controller() {
         return new Class[]{MysqlController.class};
     }
 
-    @Override
-    public IPlugin getPlugin() {
-        return null;
-    }
 
     @Override
-    public IUserContext getUserContext() {
+    public UserContext getUserContext() {
         return new UserContext();
     }
 

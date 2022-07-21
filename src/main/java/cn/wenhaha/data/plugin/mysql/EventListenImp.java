@@ -56,12 +56,8 @@ public class EventListenImp  implements EventListen {
         logger.info("我被加载了 id为：{}", id);
     }
 
+
     @Override
-    public void onStart() {
-
-    }
-
-//    @Override
     public void onStart(Integer id) {
         DataSource ds = new SimpleDataSource(jdbcUrl, "", "");
         MysqlContext.db= Db.use(ds);

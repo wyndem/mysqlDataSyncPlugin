@@ -2,6 +2,10 @@ package cn.wenhaha;
 
 import static org.junit.Assert.assertTrue;
 
+import cn.wenhaha.data.plugin.mysql.DataObjectContext;
+import cn.wenhaha.data.plugin.mysql.FieldTypeFactory;
+import cn.wenhaha.data.plugin.mysql.MysqlContext;
+import cn.wenhaha.data.plugin.mysql.UserContext;
 import org.junit.Test;
 
 /**
@@ -15,6 +19,7 @@ public class AppTest
     @Test
     public void shouldAnswerWithTrue()
     {
-        assertTrue( true );
+        FieldTypeFactory.getType("bigint");
+
     }
 }

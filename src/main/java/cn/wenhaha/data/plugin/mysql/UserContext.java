@@ -1,31 +1,64 @@
 package cn.wenhaha.data.plugin.mysql;
 
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.db.Entity;
+import cn.wenhaha.data.plugin.mysql.bean.MysqlSource;
 import cn.wenhaha.datasource.DataUser;
 import cn.wenhaha.datasource.IUserContext;
+import cn.wenhaha.datasource.exception.DataSourceException;
 
 import java.io.Serializable;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class UserContext implements IUserContext {
+public class UserContext implements IUserContext<MysqlSource> {
 
 
     @Override
-    public Object getUserInfo(Serializable id) {
-        return null;
+    public MysqlSource getUserInfo(Serializable id) {
+        return UserService.byId(id);
     }
 
     @Override
-    public Object updateUser(Serializable id) {
-        return null;
+    public MysqlSource updateUser(Serializable id) {
+
+        return getUserInfo(id);
     }
 
     @Override
     public List<DataUser> list() {
-        return null;
+        try {
+            List<Entity> user = MysqlContext.db.findAll("user");
+            return user.stream().map(u->{
+                DataUser dataUser = new DataUser();
+                dataUser.setId(u.getStr("id"));
+                dataUser.setName(u.getStr("name"));
+                dataUser.setPassword(u.getStr("password"));
+                dataUser.setCreateTime(u.getStr("create_time"));
+                dataUser.setLastUpdateTime(DateUtil.formatDateTime(new Date(u.getStr("last_update"))));
+                dataUser.setWebSite("https://www.mysql.com");
+                dataUser.setPluginCode(MysqlContext.code);
+                dataUser.setPluginName(MysqlContext.name);
+                return dataUser;
+            }).collect(Collectors.toList());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return new ArrayList<>(0);
     }
 
     @Override
     public boolean removeUser(Serializable id) {
+        try {
+            return MysqlContext.db.del(Entity.create("user").set("id", id))!=0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 }
