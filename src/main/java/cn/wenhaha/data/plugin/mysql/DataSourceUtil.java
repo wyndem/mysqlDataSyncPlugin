@@ -1,11 +1,8 @@
 package cn.wenhaha.data.plugin.mysql;
 
-import cn.hutool.core.util.StrUtil;
 import cn.wenhaha.data.plugin.mysql.bean.MysqlSource;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-
-import javax.sql.DataSource;
 
 /**
  * 数据源
@@ -25,12 +22,12 @@ public class DataSourceUtil {
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-        config.setMaxLifetime(30000);
-        config.setConnectionTimeout(60000);
-        config.setValidationTimeout(3000);
-        config.setIdleTimeout(500000);
-        config.setMinimumIdle(10);
-        config.setMaximumPoolSize(30);
+        config.setMaxLifetime(Long.parseLong(source.getMaxLifetime()));
+        config.setConnectionTimeout(Long.parseLong(source.getConnectionTimeout()));
+        config.setValidationTimeout(Long.parseLong(source.getValidationTimeout()));
+        config.setIdleTimeout(Long.parseLong(source.getIdleTimeoutMs()));
+        config.setMinimumIdle(Integer.parseInt(source.getMinIdle()));
+        config.setMaximumPoolSize(source.getMaxPoolSize());
         source.setDataSource(new HikariDataSource(config));
     }
 

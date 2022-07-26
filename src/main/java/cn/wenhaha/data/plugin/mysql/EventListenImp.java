@@ -25,16 +25,24 @@ public class EventListenImp  implements EventListen {
 
 
     private final String sql="CREATE TABLE \"user\" (\n" +
-            "  \"id\" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,\n" +
+            "  \"id\" INTEGER NOT NULL,\n" +
+            "  \"create_id\" TEXT,\n" +
+            "  \"table\" TEXT,\n" +
+            "  \"address\" TEXT,\n" +
+            "  \"parameter\" TEXT,\n" +
+            "  \"port\" INTEGER,\n" +
             "  \"name\" TEXT,\n" +
             "  \"password\" TEXT,\n" +
             "  \"url\" TEXT,\n" +
-            "  \"cid\" TEXT,\n" +
-            "  \"secret\" TEXT,\n" +
-            "  \"token\" TEXT,\n" +
-            "  \"loginJson\" TEXT,\n" +
+            "  \"connectionTimeout\" TEXT,\n" +
+            "  \"maxLifetime\" TEXT,\n" +
+            "  \"validationTimeout\" TEXT,\n" +
+            "  \"idleTimeoutMs\" TEXT,\n" +
+            "  \"minIdle\" TEXT,\n" +
+            "  \"maxPoolSize\" integer,\n" +
+            "  \"create_time\" TEXT,\n" +
             "  \"last_update\" TEXT,\n" +
-            "  \"create_time\" TEXT\n" +
+            "  PRIMARY KEY (\"id\")\n" +
             ");";
 
 
@@ -47,7 +55,7 @@ public class EventListenImp  implements EventListen {
         try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
             connection.setAutoCommit(true);
             try (Statement statement = connection.createStatement()){
-                boolean hasResults = statement.execute(sql);
+                statement.execute(sql);
             }
 
         } catch (Exception e) {

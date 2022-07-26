@@ -1,11 +1,10 @@
 package cn.wenhaha;
 
-import static org.junit.Assert.assertTrue;
-
 import cn.wenhaha.data.plugin.mysql.DataObjectContext;
+import cn.wenhaha.data.plugin.mysql.EventListenImp;
 import cn.wenhaha.data.plugin.mysql.FieldTypeFactory;
-import cn.wenhaha.data.plugin.mysql.MysqlContext;
-import cn.wenhaha.data.plugin.mysql.UserContext;
+import cn.wenhaha.datasource.ObjInfo;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -13,6 +12,17 @@ import org.junit.Test;
  */
 public class AppTest 
 {
+
+
+    @Before
+    public void test(){
+        EventListenImp eventListenImp = new EventListenImp();
+        eventListenImp.onLoad(1);
+        eventListenImp.onStart(1);
+    }
+
+
+
     /**
      * Rigorous Test :-)
      */
@@ -22,4 +32,15 @@ public class AppTest
         FieldTypeFactory.getType("bigint");
 
     }
+
+    @Test
+    public void testObjInfo()
+    {
+
+        DataObjectContext dataObjectContext = new DataObjectContext();
+        ObjInfo account = dataObjectContext.info("Account", 1);
+        System.out.println(account.getColumns().size());
+    }
+
+
 }

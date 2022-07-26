@@ -50,18 +50,6 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>com.ejlchina</groupId>
-      <artifactId>okhttps</artifactId>
-      <version>3.4.4</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.ejlchina</groupId>
-      <artifactId>okhttps-jackson</artifactId>
-      <version>3.4.4</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
       <groupId>cn.wenhaha</groupId>
       <artifactId>data-source</artifactId>
       <version>0.0.1-SNAPSHOT</version>

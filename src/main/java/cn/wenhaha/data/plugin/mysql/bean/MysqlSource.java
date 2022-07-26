@@ -20,7 +20,16 @@ public class MysqlSource {
     private String table;
     private String name;
     private String password;
+    private String address;
+    private Integer port;
+    private String parameter;
     private String url;
+    private String connectionTimeout="60000";
+    private String maxLifetime="30000";
+    private String validationTimeout="3000";
+    private String idleTimeoutMs="500000";
+    private String minIdle="10";
+    private Integer maxPoolSize=3;
     private DataSource dataSource;
 
 

@@ -5,7 +5,6 @@ import cn.hutool.db.Entity;
 import cn.wenhaha.data.plugin.mysql.bean.MysqlSource;
 import cn.wenhaha.datasource.DataUser;
 import cn.wenhaha.datasource.IUserContext;
-import cn.wenhaha.datasource.exception.DataSourceException;
 
 import java.io.Serializable;
 import java.sql.SQLException;
