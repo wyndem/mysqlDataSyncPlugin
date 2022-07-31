@@ -64,24 +64,30 @@ public class MysqlController {
 
     @PostMapping("update")
     public String update(@RequestBody MysqlSource mysql,@RequestHeader(value = "userId",required = false) Long userId) throws SQLException {
+        try{
 
-        int count = MysqlContext.db.count(Entity.create("user").set("id", mysql.getId()));
-        if(count==0){
-            return "该账号末找到";
+            int count = MysqlContext.db.count(Entity.create("user").set("id", mysql.getId()));
+            if(count==0){
+                return "该账号末找到";
+            }
+            DataSourceUtil.initDataSource(mysql);
+            String s = Db.use(mysql.getDataSource()).queryString("select version();");
+            log.info("数据库版本{}",s);
+
+            Entity entity = Entity.parse(mysql)
+                    .set("create_id", userId)
+                    .set("last_update", DateUtil.now());
+            entity.remove("dataSource");
+            int rows = MysqlContext.db.update(entity.setTableName("user"),Entity.create().set("id",mysql.getId()));
+            if (rows==0){
+                return "ERROR_插入失败";
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return  e.getMessage();
         }
-        DataSourceUtil.initDataSource(mysql);
-        String s = Db.use(mysql.getDataSource()).queryString("select version();");
-        log.info("数据库版本{}",s);
 
-        Entity entity = Entity.parse(mysql)
-                .set("create_id", userId)
-                .set("last_update", DateUtil.now());
-        int rows = MysqlContext.db.update(entity.setTableName("user"),Entity.create().set("id",mysql.getId()));
-        if (rows==0){
-            return "ERROR_插入失败";
-        }
-
-        return "OK";
+        return "ok";
     }
 
     @PostMapping("table")
