@@ -12,8 +12,10 @@ import cn.wenhaha.data.plugin.mysql.MysqlContext;
 import cn.wenhaha.data.plugin.mysql.bean.MysqlSource;
 import cn.wenhaha.data.plugin.mysql.bean.TemMysqlInfo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,11 +29,14 @@ import java.util.List;
 public class MysqlController {
 
 
+    @Autowired
+    private HttpServletRequest request;
+
     @PostMapping("add")
-    public String add(@RequestBody MysqlSource mysql,@RequestHeader(value = "userId",required = false) Long userId) {
+    public String add(@RequestBody MysqlSource mysql) {
 
 
-
+        Long userId=(Long)request.getAttribute("id");
         try{
             int count = MysqlContext.db.count(Entity.create("user")
                     .set("address",mysql.getAddress())
@@ -63,9 +68,9 @@ public class MysqlController {
 
 
     @PostMapping("update")
-    public String update(@RequestBody MysqlSource mysql,@RequestHeader(value = "userId",required = false) Long userId) throws SQLException {
+    public String update(@RequestBody MysqlSource mysql) throws SQLException {
         try{
-
+            Long userId=(Long)request.getAttribute("id");
             int count = MysqlContext.db.count(Entity.create("user").set("id", mysql.getId()));
             if(count==0){
                 return "该账号末找到";
