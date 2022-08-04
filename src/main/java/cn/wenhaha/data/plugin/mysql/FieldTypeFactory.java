@@ -12,9 +12,9 @@ import cn.wenhaha.datasource.FieldType;
 public class FieldTypeFactory {
 
     public static FieldType getType(String typeName){
-        if(typeName.charAt(typeName.length() - 1)==')'){
-            typeName = typeName.substring(0,typeName.length()-5);
-        }
+//        if(typeName.charAt(typeName.length() - 1)==')'){
+//            typeName = typeName.substring(0,typeName.length()-5);
+//        }
         typeName=typeName.toUpperCase();
         switch (typeName){
             case "TINYINT": return  FieldType.TinyInt;

@@ -15,7 +15,6 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class DataObjectContext  implements IDataObject {
@@ -35,8 +34,8 @@ public class DataObjectContext  implements IDataObject {
            return table.stream().map(e->{
                 Obj obj = new Obj();
                 obj.setNameApi(e.getStr("TABLE_NAME"));
-                obj.setName(Optional.ofNullable(e.getStr("TABLE_COMMENT"))
-                        .orElse(obj.getNameApi()));
+                String tableComment = e.getStr("TABLE_COMMENT");
+                obj.setName(StrUtil.isEmpty(tableComment)?obj.getNameApi():tableComment);
                 obj.setUpdateable(true);
                 obj.setCreateable(true);
                 obj.setDeletable(true);
@@ -73,8 +72,8 @@ public class DataObjectContext  implements IDataObject {
             objInfo.setCreateable(true);
             objInfo.setDeletable(true);
             objInfo.setNameApi(e.getStr("TABLE_NAME"));
-            objInfo.setName(Optional.ofNullable(e.getStr("TABLE_COMMENT"))
-                    .orElse(objInfo.getNameApi()));
+            String tableComment = e.getStr("TABLE_COMMENT");
+            objInfo.setName(StrUtil.isEmpty(tableComment)?objInfo.getNameApi():tableComment);
             objInfo.setPluginName(MysqlContext.name);
             objInfo.setPluginCode(MysqlContext.code);
 
@@ -89,8 +88,8 @@ public class DataObjectContext  implements IDataObject {
             List<Column> columnList = columns.stream().map(c -> {
                 Column column = new Column();
                 column.setNameApi(c.getStr("COLUMN_NAME"));
-                column.setName(Optional.ofNullable(c.getStr("COLUMN_COMMENT"))
-                        .orElse(column.getNameApi()));
+                String columnComment = c.getStr("COLUMN_COMMENT");
+                column.setName(StrUtil.isEmpty(columnComment)?column.getNameApi():columnComment);
                 String privileges = c.getStr("PRIVILEGES");
                 column.setCreateable(StrUtil.contains(privileges, "insert"));
                 column.setUpdateable(StrUtil.contains(privileges, "update"));
@@ -100,7 +99,7 @@ public class DataObjectContext  implements IDataObject {
                 column.setPrimaryKey(StrUtil.equals(c.getStr("COLUMN_KEY"), "PRI"));
                 column.setRequired(column.getNullable());
                 column.setLength(c.getInt("CHARACTER_MAXIMUM_LENGTH"));
-                column.setDatatype(FieldTypeFactory.getType(c.getStr("COLUMN_TYPE")));
+                column.setDatatype(FieldTypeFactory.getType(c.getStr("DATA_TYPE")));
                 return column;
             }).collect(Collectors.toList());
             objInfo.setColumns(columnList);
