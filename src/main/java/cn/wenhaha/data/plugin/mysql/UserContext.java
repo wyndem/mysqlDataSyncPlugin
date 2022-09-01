@@ -1,6 +1,7 @@
 package cn.wenhaha.data.plugin.mysql;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.db.Entity;
 import cn.wenhaha.data.plugin.mysql.bean.MysqlSource;
 import cn.wenhaha.datasource.DataUser;
@@ -37,7 +38,11 @@ public class UserContext implements IUserContext<MysqlSource> {
                 dataUser.setName(u.getStr("name"));
                 dataUser.setPassword(u.getStr("password"));
                 dataUser.setCreateTime(u.getStr("create_time"));
-                dataUser.setLastUpdateTime(DateUtil.formatDateTime(new Date(u.getStr("last_update"))));
+                String updateStr = u.getStr("last_update");
+                if(StrUtil.isNotEmpty(updateStr)){
+                    Date date = new Date(Long.parseLong(updateStr));
+                    dataUser.setLastUpdateTime(DateUtil.formatDateTime(date));
+                }
                 dataUser.setWebSite("https://www.mysql.com");
                 dataUser.setPluginCode(MysqlContext.code);
                 dataUser.setPluginName(MysqlContext.name);
