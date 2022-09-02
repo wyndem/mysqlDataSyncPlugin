@@ -40,8 +40,7 @@ public class UserContext implements IUserContext<MysqlSource> {
                 dataUser.setCreateTime(u.getStr("create_time"));
                 String updateStr = u.getStr("last_update");
                 if(StrUtil.isNotEmpty(updateStr)){
-                    Date date = new Date(Long.parseLong(updateStr));
-                    dataUser.setLastUpdateTime(DateUtil.formatDateTime(date));
+                    dataUser.setLastUpdateTime(updateStr);
                 }
                 dataUser.setWebSite("https://www.mysql.com");
                 dataUser.setPluginCode(MysqlContext.code);
