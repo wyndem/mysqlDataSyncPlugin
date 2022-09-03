@@ -34,8 +34,7 @@ public class DataObjectContext  implements IDataObject {
            return table.stream().map(e->{
                 Obj obj = new Obj();
                 obj.setNameApi(e.getStr("TABLE_NAME"));
-                String tableComment = e.getStr("TABLE_COMMENT");
-                obj.setName(StrUtil.isEmpty(tableComment)?obj.getNameApi():tableComment);
+                obj.setName(obj.getNameApi());
                 obj.setUpdateable(true);
                 obj.setCreateable(true);
                 obj.setDeletable(true);
@@ -72,8 +71,8 @@ public class DataObjectContext  implements IDataObject {
             objInfo.setCreateable(true);
             objInfo.setDeletable(true);
             objInfo.setNameApi(e.getStr("TABLE_NAME"));
-            String tableComment = e.getStr("TABLE_COMMENT");
-            objInfo.setName(StrUtil.isEmpty(tableComment)?objInfo.getNameApi():tableComment);
+//            String tableComment = e.getStr("TABLE_COMMENT");
+            objInfo.setName(objInfo.getNameApi());
             objInfo.setPluginName(MysqlContext.name);
             objInfo.setPluginCode(MysqlContext.code);
 
