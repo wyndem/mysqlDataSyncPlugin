@@ -36,6 +36,7 @@ public class UserContext implements IUserContext<MysqlSource> {
                 DataUser dataUser = new DataUser();
                 dataUser.setId(u.getStr("id"));
                 dataUser.setName(u.getStr("name"));
+                dataUser.setIcon("https://s1.imagehub.cc/images/2022/07/06/OIP.jpg");
                 dataUser.setPassword(u.getStr("password"));
                 dataUser.setCreateTime(u.getStr("create_time"));
                 String updateStr = u.getStr("last_update");
