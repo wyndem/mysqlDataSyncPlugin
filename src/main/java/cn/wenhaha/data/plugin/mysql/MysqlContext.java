@@ -1,10 +1,15 @@
 package cn.wenhaha.data.plugin.mysql;
 
+import cn.hutool.cache.Cache;
+import cn.hutool.cache.CacheUtil;
 import cn.hutool.db.Db;
+import cn.wenhaha.data.plugin.mysql.bean.MysqlSource;
 import cn.wenhaha.data.plugin.mysql.controller.MysqlController;
 import cn.wenhaha.datasource.EventListen;
 import cn.wenhaha.datasource.IDataObject;
 import cn.wenhaha.datasource.IDataSourcePlugin;
+
+import java.io.Serializable;
 
 public class MysqlContext implements IDataSourcePlugin {
 
@@ -14,7 +19,7 @@ public class MysqlContext implements IDataSourcePlugin {
 
     public  static  final String  name  ="mysqlHikariC";
 
-
+    public static Cache<Serializable, MysqlSource> lruCache = CacheUtil.newLRUCache(100);
 
     @Override
     public Class<?>[] controller() {

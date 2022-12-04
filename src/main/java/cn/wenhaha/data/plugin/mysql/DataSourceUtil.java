@@ -28,6 +28,7 @@ public class DataSourceUtil {
         config.setIdleTimeout(Long.parseLong(source.getIdleTimeoutMs()));
         config.setMinimumIdle(Integer.parseInt(source.getMinIdle()));
         config.setMaximumPoolSize(source.getMaxPoolSize());
+        config.setConnectionTestQuery("select 1");
         source.setDataSource(new HikariDataSource(config));
     }
 

@@ -9,6 +9,7 @@ import cn.hutool.db.ds.simple.SimpleDataSource;
 import cn.hutool.db.sql.SqlExecutor;
 import cn.wenhaha.data.plugin.mysql.DataSourceUtil;
 import cn.wenhaha.data.plugin.mysql.MysqlContext;
+import cn.wenhaha.data.plugin.mysql.UserContext;
 import cn.wenhaha.data.plugin.mysql.bean.MysqlSource;
 import cn.wenhaha.data.plugin.mysql.bean.TemMysqlInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static cn.wenhaha.data.plugin.mysql.MysqlContext.lruCache;
 
 @RestController
 @RequestMapping("mysql")
@@ -86,6 +89,9 @@ public class MysqlController {
             int rows = MysqlContext.db.update(entity.setTableName("user"),Entity.create().set("id",mysql.getId()));
             if (rows==0){
                 return "ERROR_插入失败";
+            }
+            if (lruCache.containsKey(mysql.getId())){
+               lruCache.remove(mysql.getId());
             }
         }catch (Exception e){
             e.printStackTrace();

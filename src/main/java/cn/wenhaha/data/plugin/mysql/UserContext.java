@@ -1,6 +1,7 @@
 package cn.wenhaha.data.plugin.mysql;
 
-import cn.hutool.core.date.DateUtil;
+import cn.hutool.cache.Cache;
+import cn.hutool.cache.CacheUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.db.Entity;
 import cn.wenhaha.data.plugin.mysql.bean.MysqlSource;
@@ -10,29 +11,36 @@ import cn.wenhaha.datasource.IUserContext;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static cn.wenhaha.data.plugin.mysql.MysqlContext.lruCache;
 
 public class UserContext implements IUserContext<MysqlSource> {
 
 
+
+
     @Override
     public MysqlSource getUserInfo(Serializable id) {
-        return UserService.byId(id);
+        if (lruCache.containsKey(id)) {
+            return lruCache.get(id);
+        }
+        return updateUser(id);
     }
 
     @Override
     public MysqlSource updateUser(Serializable id) {
-
-        return getUserInfo(id);
+        MysqlSource mysqlSource = UserService.byId(id);
+        lruCache.put(id, mysqlSource);
+        return mysqlSource;
     }
 
     @Override
     public List<DataUser> list() {
         try {
             List<Entity> user = MysqlContext.db.findAll("user");
-            return user.stream().map(u->{
+            return user.stream().map(u -> {
                 DataUser dataUser = new DataUser();
                 dataUser.setId(u.getStr("id"));
                 dataUser.setName(u.getStr("name"));
@@ -40,7 +48,7 @@ public class UserContext implements IUserContext<MysqlSource> {
                 dataUser.setPassword(u.getStr("password"));
                 dataUser.setCreateTime(u.getStr("create_time"));
                 String updateStr = u.getStr("last_update");
-                if(StrUtil.isNotEmpty(updateStr)){
+                if (StrUtil.isNotEmpty(updateStr)) {
                     dataUser.setLastUpdateTime(updateStr);
                 }
                 dataUser.setWebSite("https://www.mysql.com");
@@ -59,7 +67,10 @@ public class UserContext implements IUserContext<MysqlSource> {
     @Override
     public boolean removeUser(Serializable id) {
         try {
-            return MysqlContext.db.del(Entity.create("user").set("id", id))!=0;
+            if (lruCache.containsKey(id)) {
+                lruCache.remove(id);
+            }
+            return MysqlContext.db.del(Entity.create("user").set("id", id)) != 0;
         } catch (SQLException e) {
             e.printStackTrace();
         }
