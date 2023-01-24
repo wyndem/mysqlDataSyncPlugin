@@ -48,7 +48,7 @@ public class EventListenImp  implements EventListen {
 
 
     @Override
-    public void onLoad(Integer id) {
+    public void onLoad(String id) {
         if (!FileUtil.exist(path)) {
             FileUtil.touch(path);
         }
@@ -66,7 +66,7 @@ public class EventListenImp  implements EventListen {
 
 
     @Override
-    public void onStart(Integer id) {
+    public void onStart(String id) {
         DataSource ds = new SimpleDataSource(jdbcUrl, "", "");
         MysqlContext.db= Db.use(ds);
         logger.info("我被启动了");

@@ -12,7 +12,7 @@ public class App
 {
     public static void main( String[] args )
     {
-        new EventListenImp().onStart(1);
+        new EventListenImp().onStart("1");
         SpringApplication.run(App.class, args);
     }
 }

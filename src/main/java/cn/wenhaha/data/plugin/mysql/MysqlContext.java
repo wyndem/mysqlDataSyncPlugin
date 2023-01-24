@@ -8,9 +8,10 @@ import cn.wenhaha.data.plugin.mysql.controller.MysqlController;
 import cn.wenhaha.datasource.EventListen;
 import cn.wenhaha.datasource.IDataObject;
 import cn.wenhaha.datasource.IDataSourcePlugin;
+import org.pf4j.Extension;
 
 import java.io.Serializable;
-
+@Extension
 public class MysqlContext implements IDataSourcePlugin {
 
     public static Db db;

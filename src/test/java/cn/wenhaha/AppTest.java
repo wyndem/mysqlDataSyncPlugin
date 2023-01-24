@@ -17,8 +17,8 @@ public class AppTest
     @Before
     public void test(){
         EventListenImp eventListenImp = new EventListenImp();
-        eventListenImp.onLoad(1);
-        eventListenImp.onStart(1);
+        eventListenImp.onLoad("1");
+        eventListenImp.onStart("1");
     }
 
 
