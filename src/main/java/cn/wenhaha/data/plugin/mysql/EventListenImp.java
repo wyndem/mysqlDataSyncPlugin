@@ -10,9 +10,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.io.File;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
 
 public class EventListenImp  implements EventListen {
 
@@ -46,22 +43,31 @@ public class EventListenImp  implements EventListen {
             ");";
 
 
-
+    /**
+     * <p>
+     *    onload执行完后，会销毁该对象
+     * </p>
+     * @Author: Wyndem
+     * @DateTime: 2023-01-25 10:21
+     *
+     */
     @Override
     public void onLoad(String id) {
-        if (!FileUtil.exist(path)) {
-            FileUtil.touch(path);
+        logger.info("{} 正在加载插件", id);
+        if (FileUtil.exist(path)) {
+            logger.info("{} 文件已经创建了，不在进行创建",path);
+            return;
         }
-        try (Connection connection = DriverManager.getConnection(jdbcUrl)) {
-            connection.setAutoCommit(true);
-            try (Statement statement = connection.createStatement()){
-                statement.execute(sql);
-            }
+        FileUtil.touch(path);
+        DataSource ds = new SimpleDataSource(jdbcUrl,"","");
 
+        try {
+            Db.use(ds).execute(sql);
         } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
-        logger.info("我被加载了 id为：{}", id);
+
     }
 
 

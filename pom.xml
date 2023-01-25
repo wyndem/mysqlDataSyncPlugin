@@ -35,6 +35,7 @@
       <groupId>com.zaxxer</groupId>
       <artifactId>HikariCP</artifactId>
       <version>4.0.3</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>cn.wenhaha</groupId>
@@ -82,7 +83,7 @@
               <Plugin-Name>Mysql数据池</Plugin-Name>
               <Plugin-Icon>https://cloud.wenhaha.cn/api/v3/file/source/10/450-450-a026F00000wNykbQAC.png?sign=6JbmkPnd62JWYBA41CmtExX09gzOxF-firDN-xe4geo%3D%3A0</Plugin-Icon>
               <Plugin-Id>mysqlHikariC</Plugin-Id>
-              <Plugin-Version>v0.2</Plugin-Version>
+              <Plugin-Version>v0.3</Plugin-Version>
               <Plugin-Add-Page>index.html</Plugin-Add-Page>
               <Plugin-Update-Page>index.html#/update</Plugin-Update-Page>
 <!--              <Plugin-Dependencies>x, y, z</Plugin-Dependencies> -->
