@@ -9,6 +9,7 @@ import cn.hutool.db.ds.simple.SimpleDataSource;
 import cn.hutool.db.sql.SqlExecutor;
 import cn.wenhaha.data.plugin.mysql.DataSourceUtil;
 import cn.wenhaha.data.plugin.mysql.MysqlContext;
+import cn.wenhaha.data.plugin.mysql.UserContext;
 import cn.wenhaha.data.plugin.mysql.bean.MysqlSource;
 import cn.wenhaha.data.plugin.mysql.bean.TemMysqlInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +27,7 @@ import static cn.wenhaha.data.plugin.mysql.MysqlContext.lruCache;
 
 @RestController
 @RequestMapping("mysql")
-@CrossOrigin(origins = {"*"})
+@CrossOrigin(origins = {"http://localhost:3000", "null"})
 @Slf4j
 public class MysqlController {
 

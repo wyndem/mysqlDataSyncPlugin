@@ -16,7 +16,7 @@ public class MysqlContext implements IDataSourcePlugin {
 
     public static Db db;
 
-    public  static  final String  code  ="mysqlHikariCDataBase";
+    public  static  final String  code  ="mysqlHikariC";
 
     public  static  final String  name  ="mysqlHikariC";
 
