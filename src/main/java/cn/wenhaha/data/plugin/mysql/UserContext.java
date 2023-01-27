@@ -1,7 +1,5 @@
 package cn.wenhaha.data.plugin.mysql;
 
-import cn.hutool.cache.Cache;
-import cn.hutool.cache.CacheUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.db.Entity;
 import cn.wenhaha.data.plugin.mysql.bean.MysqlSource;
@@ -44,7 +42,7 @@ public class UserContext implements IUserContext<MysqlSource> {
                 DataUser dataUser = new DataUser();
                 dataUser.setId(u.getStr("id"));
                 dataUser.setName(u.getStr("name"));
-                dataUser.setIcon("https://s1.imagehub.cc/images/2022/07/06/OIP.jpg");
+                dataUser.setIcon("https://cloud.wenhaha.cn/api/v3/file/source/1399/dd.png?sign=-d0miYO2B_Pm3hxhpOa5qf4mn54Trmi-a-8zjfdGjLI%3D%3A0");
                 dataUser.setPassword(u.getStr("password"));
                 dataUser.setCreateTime(u.getStr("create_time"));
                 String updateStr = u.getStr("last_update");
